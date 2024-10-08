@@ -1,2 +1,2 @@
 ﻿# contact-access
-Desenvolvido em React Native com Typescript
+npm install
