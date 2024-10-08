@@ -10,6 +10,7 @@ import * as Contacts from "expo-contacts";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Avatar } from "../components/avatar";
 import { Button } from "../components/button";
+
 type SectionListDataProps = {
   title: string;
   data: ContactProps[];
@@ -21,6 +22,7 @@ export function Home() {
   const [contact, setContact] = useState<Contacts.Contact>();
 
   const bottomSheet = useRef<BottomSheet>(null);
+  console.log(bottomSheet);
 
   const handleBottomSheetOpen = () => bottomSheet.current?.expand();
   const handleBottomSheetClose = () => bottomSheet.current?.snapToIndex(0);
@@ -62,7 +64,7 @@ export function Home() {
           .sort((a, b) => a.title.localeCompare(b.title));
 
         setContacts(list);
-        setContact(data[0])
+        setContact(data[0]);
       }
     } catch (error) {
       console.log(error);
@@ -109,17 +111,23 @@ export function Home() {
           handleComponent={() => null}
           backgroundStyle={styles.BottomSheet}
         >
-          <Avatar name={contact.name} image={contact.image} variant="large" containerStyles={styles.image} />
+          <Avatar
+            name={contact.name}
+            image={contact.image}
+            variant="large"
+            containerStyles={styles.image}
+          />
           <View style={styles.bottomSheetContent}>
             <Text style={styles.contactName}>{contact.name}</Text>
-            { contact.phoneNumbers && 
-            <View style={styles.phoneNumber}>
-              <Feather name="phone" size={18} color={theme.colors.blue}/>
-              <Text style={styles.phone}>
-                {contact.phoneNumbers[0].number}
-              </Text>
-            </View>}
-            <Button title="Fechar" onPress={handleBottomSheetClose}/>
+            {contact.phoneNumbers && (
+              <View style={styles.phoneNumber}>
+                <Feather name="phone" size={18} color={theme.colors.blue} />
+                <Text style={styles.phone}>
+                  {contact.phoneNumbers[0].number}
+                </Text>
+              </View>
+            )}
+            <Button title="Fechar" onPress={handleBottomSheetClose} />
           </View>
         </BottomSheet>
       )}
